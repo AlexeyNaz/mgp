@@ -1,0 +1,5 @@
+[client]
+database = db_mgp
+user = megauser
+password = megauser
+default-character-set = utf8

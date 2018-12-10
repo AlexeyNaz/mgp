@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>stat</title>
+</head>
+<body>
+<h1>{{ stats.count }}</h1>
+    <table>
+        {% for stat in stats %}
+        <tr>
+            <td>{{ stat.player.login }}</td>
+            <td>{{ stat.player.firstName }}</td>
+            <td>{{ stat.player.LastName }}</td>
+            <td>{{ stat.add }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</body>
+</html>

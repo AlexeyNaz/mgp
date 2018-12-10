@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>PayerEnter {{ form.pid }}</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <input hidden="hidden" value="{{ form.pid }}" name="pid">
+    <table>
+        {{ form }}
+    </table>
+    <input type="submit" value="submit" >
+</form>
+</body>
+</html>
