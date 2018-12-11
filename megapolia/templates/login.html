@@ -3,14 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <title>Login</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static '/css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/login.css' %}" />
 </head>
 <body>
-    <form method="POST">
+<div class="div-login">
+    <form method="POST" class="vertical-center">
         {% csrf_token %}
-    <table>
-        {{ form }}
-    </table>
-    <input type="submit" value="Log In" >
-</form>
+        <div class="container">
+        <div class="row flex-column">
+            {{ form }}
+            <input type="submit" class="btn" value="Log In" >
+        </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>
