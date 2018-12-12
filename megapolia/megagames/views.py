@@ -18,6 +18,10 @@ class PlayerInfo:
         self.Score = score
         self.Login = login
 
+def index(request):
+    return render(request, "index.html")
+
+
 
 def loginU(request):
     if request.method == "POST":

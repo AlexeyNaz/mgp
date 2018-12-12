@@ -19,10 +19,12 @@ from megagames import views
 
 
 urlpatterns = [
+    re_path(r'^', views.index),
     re_path(r'^(?P<pid>\d+)/', views.player),
     re_path(r'^login', views.loginU),
     re_path(r'^logout', views.logoutU),
     re_path(r'^stat/(?P<count>\d+)', views.stat),
+    re_path(r'^(?P<pid>\d+)/', views.index),
 
     url(r'^addWin/(?P<pid>\d+)/(?P<code>\D+)', views.addWinScore, name="win-score-url"),
     url(r'^addPlay/(?P<pid>\d+)/(?P<code>\D+)', views.addPlayScore, name="play-score-url"),
