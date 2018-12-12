@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Участник {{ form.pid }}</title>
     {% load staticfiles %}
-    <link rel="stylesheet" href="{% static '/css/bootstrap.css' %}" />
-    <link rel="stylesheet" href="{% static '/css/player_enter.css' %}" />
+    <link href="{% static '/css/bootstrap.css' %}" rel="stylesheet"/>
+    <link href="{% static '/css/mobile.css' %}" rel="stylesheet"/>
 </head>
 <body>
 
-<div class="div-reg">
-    <form method="POST" class="vertical-center">
+<div class="center-div-mobile">
+    <form class="vertical-center" method="POST">
         {% csrf_token %}
         <div class="container">
-        <div class="row flex-column">
-        <input hidden="hidden" value="{{ form.pid }}" name="pid">
-        {{ form }}
-        <input type="submit" class="btn" value="Сохранить" >
+            <div class="row flex-column">
+                <input hidden="hidden" name="pid" value="{{ form.pid }}">
+                {{ form }}
+                <input class="btn" type="submit" value="Сохранить">
             </div>
         </div>
     </form>
