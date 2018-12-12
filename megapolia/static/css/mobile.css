@@ -20,6 +20,7 @@
   align-items: center;
 }
 
-.div-login{
-    
+
+.center-div-mobile input[type="submit"]{
+    margin-top: 0.5rem;
 }
