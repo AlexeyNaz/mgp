@@ -25,14 +25,17 @@ SUB_SHOICES = (
 
 
 class LoginForm(forms.Form):
-    name = forms.CharField()
-    password = forms.CharField()
+    name = forms.CharField(label='Логин')
+    password = forms.CharField(widget=forms.PasswordInput, label='Пароль')
+    widgets = {
+        'password': forms.PasswordInput(),
+    }
 
 
 class PlayerForm(forms.Form):
-    login = forms.CharField()
-    firstName = forms.CharField()
-    lastName = forms.CharField()
-    sub = forms.ChoiceField(choices=SUB_SHOICES)
-    age = forms.IntegerField()
+    login = forms.CharField(label='Логин')
+    firstName = forms.CharField(label='Имя')
+    lastName = forms.CharField(label='Фамилия')
+    sub = forms.ChoiceField(choices=SUB_SHOICES, label='Подразделение')
+    age = forms.IntegerField(label='Возраст')
     pid = forms.HiddenInput()

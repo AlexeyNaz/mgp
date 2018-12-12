@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Score</title>
+    {% load staticfiles %}
+    <link href="{% static '/css/bootstrap.css' %}" rel="stylesheet"/>
+    <link href="{% static '/css/mobile.css' %}" rel="stylesheet"/>
 </head>
 <body>
-<h1>User: {{user}}</h1>
-<h1>Итого : {{total}}</h1>
+
+<div class="center-div-mobile">
+    <form class="vertical-center" method="POST">
+        <div class="container">
+            <div class="row flex-column">
+                <label class="user-info">{{user.LastName}} {{user.FirstName}} </label>
+                <label class="user-info">{{user.Login}}</label>
+                <label class="user-info">У вас {{user.Score}} баллов!</label>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>

@@ -11,6 +11,14 @@ from megagames.forms import LoginForm, PlayerForm
 from megagames.models import Activity, Player, Event
 
 
+class PlayerInfo:
+    def __init__(self, login, first, last, score):
+        self.LastName = last
+        self.FirstName = first
+        self.Score = score
+        self.Login = login
+
+
 def loginU(request):
     if request.method == "POST":
         name = request.POST.get("name")
@@ -29,7 +37,7 @@ def loginU(request):
 
             authenticate(username=user.username, password=user.password)
             login(request, user)
-            return HttpResponse("<h2>Hello, {0}</h2>".format(activity.code))
+            return HttpResponse("<h2>Hello,`</h2>".format(activity.code))
 
     user_form = LoginForm()
     return render(request, "login.html", {"form": user_form})
@@ -61,9 +69,10 @@ def player(request, pid):
             if add is None:
                 add = 0
 
-            userinfo = players[0].login
+            pl = players[0]
+            playerInfo = PlayerInfo(pl.login, pl.firstName, pl.lastName, add)
 
-            return render(request, "scorePayer.html", {'total': add, 'user': userinfo})
+            return render(request, "scorePayer.html", {'user': playerInfo})
         else:
             return playerEnter(request, pid)
 
@@ -90,30 +99,33 @@ def addWinScore(request, pid, code):
     pla = Player.objects.get(pid=pid)
     act = Activity.objects.get(code=code)
 
-    ev = Event.objects.create(activity=act, player=pla, add=act.win, subs=0)
+    ev = Event.objects.create(activity=act, player=pla, add=act.win)
     ev.save()
 
     events = Event.objects.filter(player__pid=pid)
     add = events.aggregate(Sum('add')).get('add__sum', 0.00)
     if add is None:
         add = 0
-    userinfo = pla.login
-    return render(request, "scorePayer.html", {'total': add, 'user': userinfo})
+
+    playerInfo = PlayerInfo(pla.login, pla.firstName, pla.lastName, add)
+
+    return render(request, "scorePayer.html", {'user': playerInfo})
 
 
 def addPlayScore(request, pid, code):
     pla = Player.objects.get(pid=pid)
     act = Activity.objects.get(code=code)
 
-    ev = Event.objects.create(activity=act, player=pla, add=act.play, subs=0)
+    ev = Event.objects.create(activity=act, player=pla, add=act.play)
     ev.save()
 
     events = Event.objects.filter(player__pid=pid)
     add = events.aggregate(Sum('add')).get('add__sum', 0.00)
     if add is None:
         add = 0
-    userinfo = pla.login
-    return render(request, "scorePayer.html", {'total': add, 'user': userinfo})
+
+    playerInfo = PlayerInfo(pla.login, pla.firstName, pla.lastName, add)
+    return render(request, "scorePayer.html", {'user': playerInfo})
 
 
 def stat(request, count):
@@ -136,8 +148,6 @@ def stat(request, count):
     def myFunc(e):
         return e.add
 
-    res.sort(reverse=True,key=myFunc)
+    res.sort(reverse=True, key=myFunc)
     len = int(count)
     return render(request, "stat.html", {'stats': res[:len]})
-
-
