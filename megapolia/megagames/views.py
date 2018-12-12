@@ -37,7 +37,7 @@ def loginU(request):
 
             authenticate(username=user.username, password=user.password)
             login(request, user)
-            return HttpResponse("<h2>Hello,`</h2>".format(activity.code))
+            return HttpResponse("<h2>Hello,{0}</h2>".format(activity.code))
 
     user_form = LoginForm()
     return render(request, "login.html", {"form": user_form})
