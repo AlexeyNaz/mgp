@@ -1,10 +1,7 @@
-from _ctypes import Array
-from typing import List
-
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.db.models import Sum, Count
-from django.http import HttpRequest, HttpResponse
+from django.db.models import Sum
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from megagames.forms import LoginForm, PlayerForm
@@ -155,3 +152,32 @@ def stat(request, count):
     res.sort(reverse=True, key=myFunc)
     len = int(count)
     return render(request, "stat.html", {'stats': res[:len]})
+
+
+def stat3(request):
+    res = []
+    players = Player.objects.all()
+
+    class StatEl:
+        def __init__(self, a, p, act_count):
+            self.act_count = act_count
+            self.add = a
+            self.player = p            
+
+    for player in players:
+        add = Event.objects.filter(player__pid=player.pid).aggregate(Sum('add')).get('add__sum', 0.00)
+        if add is None:
+            add = 0
+
+        act_count = Event.objects.values('')
+
+
+
+        reselement = StatEl(add, player)
+        res.append(reselement)
+
+    def myFunc(e):
+        return e.add
+
+    res.sort(reverse=True, key=myFunc)
+    return render(request, "stat3.html")
