@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Мегаполия</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static '/css/stat10.css' %}"/>
+</head>
+<body>
+<table class="top10-table">
+    {% for r in  stats %}
+    <tr class="top10-table-row">
+        <td class="top10-name">{{r.player.lastName}} {{r.player.firstName}} /n ({{r.player.login}})</td>
+        <td class="top10-act-count">{{r.act_count}}</td>
+        <td class="top10-rate">{{r.add}}</td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

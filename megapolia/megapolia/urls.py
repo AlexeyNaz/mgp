@@ -25,6 +25,8 @@ urlpatterns = [
     re_path(r'^logout', views.logoutU),
     re_path(r'^stat/(?P<count>\d+)', views.stat),
     re_path(r'^(?P<pid>\d{4})/', views.player),
+    re_path(r'^stat3', views.stat3),
+    re_path(r'^stat10', views.stat10),
 
     url(r'^addWin/(?P<pid>\d+)/(?P<code>\D+)', views.addWinScore, name="win-score-url"),
     url(r'^addPlay/(?P<pid>\d+)/(?P<code>\D+)', views.addPlayScore, name="play-score-url"),

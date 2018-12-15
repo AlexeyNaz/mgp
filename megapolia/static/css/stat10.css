@@ -3,24 +3,25 @@ body {
         background-size: cover;
 }
 
-.top3-table{
+.top10-table{
         position: absolute;
         left:1872px;
         top: 463px;
-        font-size: 52px;
+        font-size: 100px;
+
 }
-.top3-table td{
-        height: 280px;
+.top10-table td{
+        height: 89px;
         text-align: center;
         overflow-x: hidden;
         overflow-y: hidden;
 }
-.top3-name{
+.top10-name{
         width: 890px;
 }
-.top3-act-count{
+.top10-act-count{
         width: 592px;
 }
-.top3-rate{
+.top10-rate{
         width: 443px;
 }

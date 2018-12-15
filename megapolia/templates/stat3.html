@@ -7,5 +7,14 @@
     <link rel="stylesheet" href="{% static '/css/stat3.css' %}"/>
 </head>
 <body>
+<table class="top3-table">
+    {% for r in  stats %}
+    <tr class="top3-table-row">
+        <td class="top3-name">{{r.player.lastName}} {{r.player.firstName}} ({{r.player.login}})</td>
+        <td class="top3-act-count">{{r.act_count}}</td>
+        <td class="top3-rate">{{r.add}}</td>
+    </tr>
+    {% endfor %}
+</table>
 </body>
 </html>

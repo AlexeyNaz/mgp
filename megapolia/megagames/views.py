@@ -1,11 +1,15 @@
+import datetime
+from operator import attrgetter
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.core.serializers import json
 from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import render
 
 from megagames.forms import LoginForm, PlayerForm
-from megagames.models import Activity, Player, Event
+from megagames.models import Activity, Player, Event, Ref
 
 
 class PlayerInfo:
@@ -14,6 +18,18 @@ class PlayerInfo:
         self.FirstName = first
         self.Score = score
         self.Login = login
+
+
+class StatEl:
+    def __init__(self, a, p, act_count, la):
+        self.act_count = act_count
+        self.add = a
+        self.player = p
+        self.last_activity = la
+
+
+def myFunc(e):
+    return e.add
 
 
 def index(request):
@@ -87,7 +103,7 @@ def playerEnter(request, pid):
         age = request.POST.get("age")
         pid = request.POST.get("pid")
 
-        Player.objects.create(pid=pid, login=payername, firstName=first_name, lastName=last_name, sub=sub, age=age)
+        Player.objects.create(pid=pid, login=payername, firstName=first_name, lastName=last_name, sub=Ref.objects.filter(name=sub)[0], age=age)
 
         return player(request, pid)
     else:
@@ -129,55 +145,41 @@ def addPlayScore(request, pid, code):
     return render(request, "scorePayer.html", {'user': playerInfo})
 
 
-def stat(request, count):
+def stat():
     res = []
     players = Player.objects.all()
 
-    class StatEl:
-        def __init__(self, a, p):
-            self.add = a
-            self.player = p
-
-    for player in players:
-        add = Event.objects.filter(player__pid=player.pid).aggregate(Sum('add')).get('add__sum', 0.00)
+    for pla in players:
+        add = Event.objects.filter(player__pid=pla.pid).aggregate(Sum('add')).get('add__sum', 0.00)
         if add is None:
             add = 0
 
-        reselement = StatEl(add, player)
+        evs = Event.objects.filter(player=pla)
+
+        act_count = evs.values('activity').distinct().count()
+        max_date = None
+        if evs.count() != 0:
+            max_date = evs.order_by('createAt')[0].createAt
+        else:
+            max_date = max_date = datetime.datetime.min
+
+        reselement = StatEl(add, pla, act_count, max_date)
         res.append(reselement)
 
-    def myFunc(e):
-        return e.add
+    def take_add(elem):
+        return elem.add
 
-    res.sort(reverse=True, key=myFunc)
-    len = int(count)
-    return render(request, "stat.html", {'stats': res[:len]})
+    def take_la(elem):
+        return elem.last_activity
+
+    s = sorted(res, key=take_la)
+    res = sorted(s, key=take_add, reverse=True)
+    return res
 
 
 def stat3(request):
-    res = []
-    players = Player.objects.all()
-
-    class StatEl:
-        def __init__(self, a, p, act_count):
-            self.act_count = act_count
-            self.add = a
-            self.player = p            
-
-    for player in players:
-        add = Event.objects.filter(player__pid=player.pid).aggregate(Sum('add')).get('add__sum', 0.00)
-        if add is None:
-            add = 0
-
-        act_count = Event.objects.values('')
+    return render(request, "stat3.html", {'stats': stat()[:3]})
 
 
-
-        reselement = StatEl(add, player)
-        res.append(reselement)
-
-    def myFunc(e):
-        return e.add
-
-    res.sort(reverse=True, key=myFunc)
-    return render(request, "stat3.html")
+def stat10(request):
+    return render(request, "stat3.html", {'stats': stat()[:10]})
