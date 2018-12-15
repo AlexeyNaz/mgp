@@ -11,10 +11,15 @@ class LoginForm(forms.Form):
     }
 
 
+class RefChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.name
+
+
 class PlayerForm(forms.Form):
     login = forms.CharField(label='Логин')
     firstName = forms.CharField(label='Имя')
     lastName = forms.CharField(label='Фамилия')
-    sub = forms.ModelChoiceField(queryset=Ref.objects.filter(type='sub').values('name'), label='Подразделение')
+    sub = RefChoiceField(queryset=Ref.objects.filter(type='sub'), label='Подразделение')
     age = forms.IntegerField(label='Возраст')
     pid = forms.HiddenInput()
