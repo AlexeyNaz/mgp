@@ -61,9 +61,11 @@
     margin-bottom: 100px;
     padding: 2px;
     font-size: 5rem;
-    color: #28b93c;
+    font-weight: bold;
+    color: #731982;
     border:  #28b93c 1px solid;
     border-radius: 30px;
+    font-family: Arial;
 }
 .add-score-user-info{
     font-size: 5rem;
