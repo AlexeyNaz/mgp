@@ -20,15 +20,9 @@ class PlayerInfo:
 
 
 class StatEl:
-    def __init__(self, a, p, act_count, la):
+    def __init__(self, p, act_count):
         self.act_count = act_count
-        self.add = a
         self.player = p
-        self.last_activity = la
-
-
-def myFunc(e):
-    return e.add
 
 
 def index(request):
@@ -78,17 +72,8 @@ def player(request, pid):
     else:
         players = Player.objects.filter(pid=pid)
         if players.count() > 0:
-            events = Event.objects.filter(player__pid=pid)
-
-            add = events.aggregate(Sum('add')).get('add__sum', 0.00)
-
-            if add is None:
-                add = 0
-
             pl = players[0]
-            playerInfo = PlayerInfo(pl.login, pl.firstName, pl.lastName, add)
-
-            return render(request, "scorePayer.html", {'user': playerInfo})
+            return render(request, "scorePayer.html", {'user': pl})
         else:
             return playerEnter(request, pid)
 
@@ -103,7 +88,7 @@ def playerEnter(request, pid):
         pid = request.POST.get("pid")
 
         Player.objects.create(pid=pid, login=payername, firstName=first_name, lastName=last_name,
-                              sub=Ref.objects.get(id=sub), age=age)
+                              sub=Ref.objects.get(id=sub), age=age, score=0, lastEvent=datetime.datetime.now())
 
         return player(request, pid)
     else:
@@ -112,68 +97,37 @@ def playerEnter(request, pid):
         return render(request, "playerEnter.html", {"form": player_form})
 
 
-def addWinScore(request, pid, code):
+def addScore(pid, act, toAdd):
     pla = Player.objects.get(pid=pid)
-    act = Activity.objects.get(code=code)
-
-    ev = Event.objects.create(activity=act, player=pla, add=act.win)
+    ev = Event.objects.create(activity=act, player=pla, add=toAdd)
+    pla.score = pla.score + toAdd
+    pla.lastEvent = ev.createAt
+    pla.save()
     ev.save()
 
-    events = Event.objects.filter(player__pid=pid)
-    add = events.aggregate(Sum('add')).get('add__sum', 0.00)
-    if add is None:
-        add = 0
+    return pla
 
-    playerInfo = PlayerInfo(pla.login, pla.firstName, pla.lastName, add)
 
-    return render(request, "scorePayer.html", {'user': playerInfo})
+def addWinScore(request, pid, code):
+    act = Activity.objects.get(code=code)
+    pla = addScore(pid, act, act.win)
+    return render(request, "scorePayer.html", {'user': pla})
 
 
 def addPlayScore(request, pid, code):
-    pla = Player.objects.get(pid=pid)
     act = Activity.objects.get(code=code)
-
-    ev = Event.objects.create(activity=act, player=pla, add=act.play)
-    ev.save()
-
-    events = Event.objects.filter(player__pid=pid)
-    add = events.aggregate(Sum('add')).get('add__sum', 0.00)
-    if add is None:
-        add = 0
-
-    playerInfo = PlayerInfo(pla.login, pla.firstName, pla.lastName, add)
-    return render(request, "scorePayer.html", {'user': playerInfo})
+    pla = addScore(pid, act, act.play)
+    return render(request, "scorePayer.html", {'user': pla})
 
 
 def stat():
     res = []
-    players = Player.objects.all()
+    players = Player.objects.order_by('-score', 'lastEvent')
 
     for pla in players:
-        evs = Event.objects.filter(player=pla)
-        add = evs.aggregate(Sum('add')).get('add__sum', 0.00)
-        if add is None:
-            add = 0
-
-        act_count = evs.values('activity').distinct().count()
-        max_date = None
-        if evs.count() != 0:
-            max_date = evs.order_by('createAt')[0].createAt
-        else:
-            max_date = datetime.datetime.min
-
-        reselement = StatEl(add, pla, act_count, max_date)
+        ev_count = Event.objects.filter(player=pla).count()
+        reselement = StatEl(pla, ev_count)
         res.append(reselement)
-
-    def take_add(elem):
-        return elem.add
-
-    def take_la(elem):
-        return elem.last_activity
-
-    s = sorted(res, key=take_la)
-    res = sorted(s, key=take_add, reverse=True)
-
     return res
 
 
@@ -188,12 +142,11 @@ def stat10(request):
 def fill_db(request):
     for i in range(1000, 2000):
         if Player.objects.filter(pid=i).count() == 0:
-            Player.objects.create(pid=i, login=i, firstName=i, lastName=i, sub=Ref.objects.get(id=1), age=i)
+            Player.objects.create(pid=i, login=i, firstName=i, lastName=i, sub=Ref.objects.get(id=1), age=i, score=0, lastEvent=datetime.datetime.now())
 
     for pl in Player.objects.all():
         for act in Activity.objects.all():
             if random.choice((True, False)):
-                Event.objects.create(activity=act, player=pl, add=act.play)
+                addScore(pl.pid, act, act.win)
             else:
-                Event.objects.create(activity=act, player=pl, add=act.win)
-
+                addScore(pl.pid, act, act.play)
