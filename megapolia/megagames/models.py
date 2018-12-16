@@ -16,7 +16,7 @@ class Player(models.Model):
     lastName = models.CharField(max_length=32)
     sub = models.ForeignKey(Ref, null=True, on_delete=models.SET_NULL)
     age = models.IntegerField()
-    score = models.IntegerField(db_index=True)
+    score = models.IntegerField(db_index=True,  default=0)
     lastEvent = models.DateTimeField(db_index=True, blank=True, default=datetime.datetime.now())
 
 
