@@ -1,9 +1,8 @@
 import datetime
-from operator import attrgetter
+import random
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.core.serializers import json
 from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -190,3 +189,11 @@ def fill_db(request):
     for i in range(1000, 4000):
         if Player.objects.filter(pid=i).count() == 0:
             Player.objects.create(pid=i, login=i, firstName=i, lastName=i, sub=Ref.objects.get(id=1), age=i)
+
+    for pl in Player.objects.all():
+        for act in Activity.objects.all():
+            if random.choice((True, False)):
+                Event.objects.create(activity=act, player=pl, add=act.play)
+            else:
+                Event.objects.create(activity=act, player=pl, add=act.win)
+
