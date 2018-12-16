@@ -1,0 +1,24 @@
+table{
+    width: 100%;
+}
+table td,
+table th{
+    width: 16.3vw;
+}
+
+table thead,
+table tbody {
+  display: block;
+}
+
+table td{
+    border-bottom: 1px solid #28b93c;
+    text-align: center;
+}
+
+
+table tbody {
+  overflow-y: auto;
+  height: 90vh;
+}
+

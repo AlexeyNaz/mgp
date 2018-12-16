@@ -30,6 +30,7 @@ urlpatterns = [
     re_path(r'^stat10', views.stat10),
     re_path(r'^testfill', views.fill_db),
     path('admin/', admin.site.urls),
+    path('all_players/', views.all_players),
 
 
     url(r'^addWin/(?P<pid>\d+)/(?P<code>\D+)', views.addWinScore, name="win-score-url"),

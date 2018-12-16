@@ -91,7 +91,7 @@ def player(request, pid):
                 return render(request, 'massage.html',
                               {'mass': 'Игрок ' + player.login + ' уже получил очки за данную игру'})
             return render(request, "addScore.html",
-                          {'player_name': player.login, 'pid': player.pid, 'code': user.username})
+                          {'player': player, 'pid': player.pid, 'code': user.username})
         else:
             return render(request, "playerNotFound.html")
 
@@ -187,3 +187,7 @@ def fill_db(request):
                 addScore(pl.pid, act, act.win)
             else:
                 addScore(pl.pid, act, act.play)
+
+
+def all_players(request):
+    return render(request, "players.html", {'players': Player.objects.all().order_by('-score','lastEvent')})

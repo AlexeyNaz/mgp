@@ -36,7 +36,7 @@
     font-family: Arial;
 }
 .acts-table td{
-    border-bottom: 1px solid #bdffca;
+    border-bottom: 1px solid #28b93c;
 }
 
 .acts-table th{
@@ -69,4 +69,7 @@
 }
 .add-score-user-info{
     font-size: 7rem;
+}
+.add-score-user-info-name{
+    font-size: 3rem;
 }
