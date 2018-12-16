@@ -64,8 +64,7 @@ def player(request, pid):
         players = Player.objects.filter(pid=pid)
         if players.count() > 0:
             player = players.first()
-            return render(request, "addScore.html",
-                          {'player_name': player.login, 'pid': player.pid, 'code': user.username})
+            return render(request, "addScore.html", {'player_name': player.login, 'pid': player.pid, 'code': user.username})
         else:
             return render(request, "playerNotFound.html")
 
@@ -73,7 +72,24 @@ def player(request, pid):
         players = Player.objects.filter(pid=pid)
         if players.count() > 0:
             pl = players[0]
-            return render(request, "scorePayer.html", {'user': pl})
+            evs = Event.objects.filter(player=pl)
+            acts = Activity.objects.all()
+
+            class AccPl:
+                def __init__(self, act, score, played):
+                    self.act = act
+                    self.score = score
+                    self.played = played
+
+            actPs = []
+            for act in acts:
+                es = evs.filter(activity=act)
+                if es.count() > 0:
+                    actPs.append(AccPl(act, es[0].add, True))
+                else:
+                    actPs.append(AccPl(act, 0, False))
+
+            return render(request, "scorePayer.html", {'player': pl, 'acts': actPs})
         else:
             return playerEnter(request, pid)
 
@@ -142,7 +158,8 @@ def stat10(request):
 def fill_db(request):
     for i in range(1000, 2000):
         if Player.objects.filter(pid=i).count() == 0:
-            Player.objects.create(pid=i, login=i, firstName=i, lastName=i, sub=Ref.objects.get(id=1), age=i, score=0, lastEvent=datetime.datetime.now())
+            Player.objects.create(pid=i, login=i, firstName=i, lastName=i, sub=Ref.objects.get(id=1), age=i, score=0,
+                                  lastEvent=datetime.datetime.now())
 
     for pl in Player.objects.all():
         for act in Activity.objects.all():

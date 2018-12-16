@@ -13,9 +13,33 @@
     <form class="vertical-center" method="POST">
         <div class="container">
             <div class="row flex-column">
-                <label class="user-info">{{user.lastName}} {{user.firstName}} </label>
-                <label class="user-info">{{user.login}}</label>
-                <label class="user-info">Количество баллов: {{user.score}}!</label>
+                <label class="user-info">{{ player.lastName }} {{ player.firstName }} </label>
+                <label class="user-info">{{ player.login }}</label>
+                <label class="user-info">Количество баллов: {{ player.score }}!</label>
+                <table class="acts-table">
+                    <thead>
+                    <tr>
+                        <th>Активность</th>
+                        <th>Баллы за победу</th>
+                        <th>Баллы за участие</th>
+                        <th>Баллов получено</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for act in  acts %}
+                        <tr>
+                            <td class="td-desc">{{act.act.desc}}</td>
+                            <td class="td-d">{{act.act.win}}</td>
+                            <td class="td-d">{{act.act.play}}</td>
+                            {% if act.played%}
+                                <td class="td-d score-getted">{{ act.score }}</td>
+                            {% else %}
+                                <td class="td-d score-missing"> -------- </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </form>

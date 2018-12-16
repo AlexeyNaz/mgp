@@ -30,3 +30,21 @@
     text-align: center;
     font-family: Arial;
 }
+
+.acts-table th{
+    text-align: center;
+}
+
+.td-d{
+    margin: 2px;
+    text-align: center;
+}
+
+.score-getted{
+    color: #1e7e34;
+    font-weight: bold;
+}
+.score-missing{
+    color: #7e020e;
+    font-weight: bold;
+}
