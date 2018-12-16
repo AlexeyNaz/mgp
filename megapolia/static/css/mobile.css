@@ -30,7 +30,10 @@
     text-align: center;
     font-family: Arial;
 }
-
+.acts-table{
+    margin-top: 24px;
+    font-size: 18px;
+}
 .acts-table th{
     text-align: center;
 }
@@ -49,11 +52,11 @@
     font-weight: bold;
 }
 .a-add-score{
-    margin-top: 5px;
+    margin-top: 100px;
     padding: 2px;
     font-size: 5rem;
-    color:#1e7e34;
-    border: #1e7e34 1px solid;
+    color: #28b93c;
+    border:  #28b93c 1px solid;
     border-radius: 2px;
 }
 .add-score-user-info{
