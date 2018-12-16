@@ -13,7 +13,6 @@
     <form class="vertical-center" method="POST">
         <div class="container">
             <div class="row flex-column">
-                <label class="add-score-user-info user-info">Игрок:</label>
                 <label class="add-score-user-info user-info">{{ player_name }}</label>
                 <a class="btn a-add-score" href="{% url 'win-score-url' pid code %}">Победа</a>
                 <a class="btn a-add-score" href="{% url 'play-score-url' pid code %}">Участие</a>
