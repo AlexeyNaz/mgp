@@ -24,11 +24,10 @@ urlpatterns = [
     re_path(r'^(?P<pid>\d{4})/', views.player),
     re_path(r'^login', views.loginU),
     re_path(r'^logout', views.logoutU),
-    re_path(r'^stat/(?P<count>\d+)', views.stat),
     re_path(r'^(?P<pid>\d{4})/', views.player),
     re_path(r'^stat3', views.stat3),
     re_path(r'^stat10', views.stat10),
-    re_path(r'^testfill', views.fill_db),
+    #re_path(r'^testfill', views.fill_db),
     path('admin/', admin.site.urls),
     path('all_players/', views.all_players),
 
