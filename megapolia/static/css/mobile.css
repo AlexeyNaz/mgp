@@ -32,8 +32,13 @@
 }
 .acts-table{
     margin-top: 24px;
-    font-size: 18px;
+    font-size: 22px;
+    font-family: Arial;
 }
+.acts-table td{
+    border-bottom: 1px solid #bdffca;
+}
+
 .acts-table th{
     text-align: center;
 }

@@ -1,5 +1,5 @@
 INSERT INTO db_mgp.megagames_activity (id, code, `desc`, comment, win, play, password)
-VALUES (18, '' kviz '', '' КВИЗ/ Брехня '', '''', 6, 2, '' eaxr6s '');
+VALUES (18, '' kviz '', '' КВИЗ'', '''', 6, 2, '' eaxr6s '');
 INSERT INTO db_mgp.megagames_activity (id, code, `desc`, comment, win, play, password)
 VALUES (19, '' humancheckers '', '' Человеческие Шашки '', '''', 6, 2, '' wcmvxb '');
 INSERT INTO db_mgp.megagames_activity (id, code, `desc`, comment, win, play, password)
