@@ -47,7 +47,7 @@ def loginU(request):
 
             authenticate(username=user.username, password=user.password)
             login(request, user)
-            return HttpResponse("<h2>Hello,{0}</h2>".format(activity.code))
+            return render(request, 'massage.html', {'mass': 'Добро пожаловать, администратор ' + user.username})
 
     user_form = LoginForm()
     return render(request, "login.html", {"form": user_form})
@@ -58,38 +58,48 @@ def logoutU(request):
     return loginU(request)
 
 
+def get_player_game_info(players):
+    sorted_players = list(Player.objects.order_by('-score', 'lastEvent'))
+    pl = players[0]
+    evs = Event.objects.filter(player=pl)
+    acts = Activity.objects.all()
+
+    class AccPl:
+        def __init__(self, act, score, played):
+            self.act = act
+            self.score = score
+            self.played = played
+
+    actPs = []
+    for act in acts:
+        es = evs.filter(activity=act)
+        if es.count() > 0:
+            actPs.append(AccPl(act, es[0].add, True))
+        else:
+            actPs.append(AccPl(act, 0, False))
+
+    return {'player': pl, 'acts': actPs, 'place': sorted_players.index(pl) + 1}
+
+
 def player(request, pid):
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
         players = Player.objects.filter(pid=pid)
         if players.count() > 0:
             player = players.first()
-            return render(request, "addScore.html", {'player_name': player.login, 'pid': player.pid, 'code': user.username})
+            if Event.objects.filter(player=player).count() > 0:
+                return render(request, 'massage.html',
+                              {'mass': 'Игрок ' + player.login + ' уже получил очки за данную игру'})
+            return render(request, "addScore.html",
+                          {'player_name': player.login, 'pid': player.pid, 'code': user.username})
         else:
             return render(request, "playerNotFound.html")
 
     else:
         players = Player.objects.filter(pid=pid)
+
         if players.count() > 0:
-            pl = players[0]
-            evs = Event.objects.filter(player=pl)
-            acts = Activity.objects.all()
-
-            class AccPl:
-                def __init__(self, act, score, played):
-                    self.act = act
-                    self.score = score
-                    self.played = played
-
-            actPs = []
-            for act in acts:
-                es = evs.filter(activity=act)
-                if es.count() > 0:
-                    actPs.append(AccPl(act, es[0].add, True))
-                else:
-                    actPs.append(AccPl(act, 0, False))
-
-            return render(request, "scorePayer.html", {'player': pl, 'acts': actPs})
+            return render(request, "scorePayer.html", get_player_game_info(players))
         else:
             return playerEnter(request, pid)
 
@@ -125,15 +135,25 @@ def addScore(pid, act, toAdd):
 
 
 def addWinScore(request, pid, code):
+    pla = Player.objects.get(pid=pid)
+    if Event.objects.filter(player=pla).count() > 0:
+        return render(request, 'massage.html', {'mass': 'Игрок ' + pla.login + ' уже получил очки за данную игру'})
+
     act = Activity.objects.get(code=code)
     pla = addScore(pid, act, act.win)
-    return render(request, "scorePayer.html", {'user': pla})
+    players = Player.objects.filter(pid=pid)
+    return render(request, "scorePayer.html", get_player_game_info(players))
 
 
 def addPlayScore(request, pid, code):
+    pla = Player.objects.get(pid=pid)
+    if Event.objects.filter(player=pla).count() > 0:
+        return render(request, 'massage.html', {'mass': 'Игрок ' + pla.login + ' уже получил очки за данную игру'})
+
     act = Activity.objects.get(code=code)
     pla = addScore(pid, act, act.play)
-    return render(request, "scorePayer.html", {'user': pla})
+    players = Player.objects.filter(pid=pid)
+    return render(request, "scorePayer.html", get_player_game_info(players))
 
 
 def stat():

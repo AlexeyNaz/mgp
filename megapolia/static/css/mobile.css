@@ -48,3 +48,14 @@
     color: #7e020e;
     font-weight: bold;
 }
+.a-add-score{
+    margin-top: 5px;
+    padding: 2px;
+    font-size: 5rem;
+    color:#1e7e34;
+    border: #1e7e34 1px solid;
+    border-radius: 2px;
+}
+.add-score-user-info{
+    font-size: 5rem;
+}
