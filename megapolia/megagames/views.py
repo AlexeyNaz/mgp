@@ -125,7 +125,7 @@ def playerEnter(request, pid):
 
 def addScore(pid, act, toAdd):
     pla = Player.objects.get(pid=pid)
-    ev = Event.objects.create(activity=act, player=pla, add=toAdd)
+    ev = Event.objects.create(activity=act, player=pla, add=toAdd, createAt= datetime.datetime.now())
     pla.score = pla.score + toAdd
     pla.lastEvent = ev.createAt
     pla.save()

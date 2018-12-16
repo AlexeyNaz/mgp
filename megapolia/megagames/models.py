@@ -19,6 +19,9 @@ class Player(models.Model):
     score = models.IntegerField(db_index=True,  default=0)
     lastEvent = models.DateTimeField(db_index=True, blank=True, default=datetime.datetime.now())
 
+    def __str__(self):
+        return self.login
+
 
 class Activity(models.Model):
     code = models.CharField(max_length=16)
@@ -28,6 +31,9 @@ class Activity(models.Model):
     play = models.IntegerField()
     password = models.CharField(max_length=16)
 
+    def __str__(self):
+        return self.desc
+
 
 class Event(models.Model):
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
@@ -35,6 +41,5 @@ class Event(models.Model):
     add = models.IntegerField()
     createAt = models.DateTimeField(db_index=True, blank=True)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.createAt = datetime.datetime.now()
+    def __str__(self):
+        return self.player.login + "/" + self.activity.desc
