@@ -31,7 +31,7 @@ class Event(models.Model):
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     add = models.IntegerField()
-    createAt = models.DateTimeField(blank=True)
+    createAt = models.DateTimeField(db_index=True, blank=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

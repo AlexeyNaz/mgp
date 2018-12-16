@@ -186,7 +186,7 @@ def stat10(request):
 
 
 def fill_db(request):
-    for i in range(1000, 4000):
+    for i in range(1000, 2000):
         if Player.objects.filter(pid=i).count() == 0:
             Player.objects.create(pid=i, login=i, firstName=i, lastName=i, sub=Ref.objects.get(id=1), age=i)
 
