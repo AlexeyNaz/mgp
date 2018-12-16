@@ -1,28 +1,28 @@
 body {
         background: url('../img/stat3.png') no-repeat center center fixed;
-        background-size: 2558px 1422px;
-        width: 2558px;
-        height: 1422px;
+        background-size: 1151px 640px;
+        width: 1151px;
+        height: 640px;
 }
 
 .top3-table{
         position: absolute;
-        left:390px;
-        top: 463px;
+        left:175px;
+        top: 208px;
         font-size: 52px;
 }
 .top3-table td{
-        height: 280px;
+        height: 126px;
         text-align: center;
         overflow-x: hidden;
         overflow-y: hidden;
 }
 .top3-name{
-        width: 890px;
+        width: 400px;
 }
 .top3-act-count{
-        width: 592px;
+        width: 267px;
 }
 .top3-rate{
-        width: 443px;
+        width: 198px;
 }
