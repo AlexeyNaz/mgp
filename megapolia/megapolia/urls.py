@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from django.contrib import admin
 from django.urls import re_path, path
 from megagames import views
 
@@ -28,6 +29,7 @@ urlpatterns = [
     re_path(r'^stat3', views.stat3),
     re_path(r'^stat10', views.stat10),
     re_path(r'^testfill', views.fill_db),
+    path('admin/', admin.site.urls),
 
 
     url(r'^addWin/(?P<pid>\d+)/(?P<code>\D+)', views.addWinScore, name="win-score-url"),

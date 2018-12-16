@@ -1529,6 +1529,7 @@ model</ColNames>
     <column id="360" parent="283" name="comment">
       <Position>4</Position>
       <DataType>varchar(1024)|0s</DataType>
+      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="361" parent="283" name="win">
@@ -1567,128 +1568,130 @@ model</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="367" parent="284" name="activity_id">
+    <column id="367" parent="284" name="createAt">
       <Position>3</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>datetime(6)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="368" parent="284" name="player_id">
+    <column id="368" parent="284" name="activity_id">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="369" parent="284" name="createAt">
+    <column id="369" parent="284" name="player_id">
       <Position>5</Position>
-      <DataType>datetime(6)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="370" parent="284" name="megagames_event_activity_id_169746ce_fk_megagames_activity_id">
+    <index id="370" parent="284" name="megagames_event_createAt_c4be95d2">
+      <ColNames>createAt</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="371" parent="284" name="megagames_event_activity_id_169746ce_fk_megagames_activity_id">
       <ColNames>activity_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="371" parent="284" name="megagames_event_player_id_8b9c9877_fk_megagames_player_id">
+    <index id="372" parent="284" name="megagames_event_player_id_8b9c9877_fk_megagames_player_id">
       <ColNames>player_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="372" parent="284" name="PRIMARY">
+    <key id="373" parent="284" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="373" parent="284" name="megagames_event_activity_id_169746ce_fk_megagames_activity_id">
+    <foreign-key id="374" parent="284" name="megagames_event_activity_id_169746ce_fk_megagames_activity_id">
       <ColNames>activity_id</ColNames>
       <RefSchemaName>db_mgp</RefSchemaName>
       <RefTableName>megagames_activity</RefTableName>
       <RefColNames>id</RefColNames>
-      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="374" parent="284" name="megagames_event_player_id_8b9c9877_fk_megagames_player_id">
+    <foreign-key id="375" parent="284" name="megagames_event_player_id_8b9c9877_fk_megagames_player_id">
       <ColNames>player_id</ColNames>
       <RefSchemaName>db_mgp</RefSchemaName>
       <RefTableName>megagames_player</RefTableName>
       <RefColNames>id</RefColNames>
-      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="375" parent="285" name="id">
+    <column id="376" parent="285" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="376" parent="285" name="pid">
+    <column id="377" parent="285" name="pid">
       <Position>2</Position>
       <DataType>varchar(4)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="377" parent="285" name="login">
+    <column id="378" parent="285" name="login">
       <Position>3</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="378" parent="285" name="firstName">
+    <column id="379" parent="285" name="firstName">
       <Position>4</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="379" parent="285" name="lastName">
+    <column id="380" parent="285" name="lastName">
       <Position>5</Position>
       <DataType>varchar(32)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="380" parent="285" name="sub_id">
-      <Position>6</Position>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
     <column id="381" parent="285" name="age">
-      <Position>7</Position>
+      <Position>6</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="382" parent="285" name="megagames_player_sub_id_20f8186f">
+    <column id="382" parent="285" name="sub_id">
+      <Position>7</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="383" parent="285" name="megagames_player_sub_id_20f8186f_fk_megagames_ref_id">
       <ColNames>sub_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="383" parent="285" name="PRIMARY">
+    <key id="384" parent="285" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="384" parent="285" name="megagames_player_sub_id_20f8186f_fk_megagames_ref_id">
+    <foreign-key id="385" parent="285" name="megagames_player_sub_id_20f8186f_fk_megagames_ref_id">
       <ColNames>sub_id</ColNames>
       <RefSchemaName>db_mgp</RefSchemaName>
       <RefTableName>megagames_ref</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="385" parent="286" name="id">
+    <column id="386" parent="286" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="386" parent="286" name="name">
+    <column id="387" parent="286" name="name">
       <Position>2</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="387" parent="286" name="type">
+    <column id="388" parent="286" name="type">
       <Position>3</Position>
       <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="388" parent="286" name="PRIMARY">
+    <key id="389" parent="286" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
