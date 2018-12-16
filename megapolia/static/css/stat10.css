@@ -1,13 +1,15 @@
 body {
-        background: url('../img/stat3.png') no-repeat center center fixed;
-        background-size: cover;
+        background: url('../img/stat10.png') no-repeat center center fixed;
+        background-size: contain;
+        width: 2558px;
+        height: 1422px;
 }
 
 .top10-table{
         position: absolute;
-        left:1872px;
+        left:390px;
         top: 463px;
-        font-size: 100px;
+        font-size: 35px;
 
 }
 .top10-table td{

@@ -1,11 +1,13 @@
 body {
         background: url('../img/stat3.png') no-repeat center center fixed;
         background-size: cover;
+        width: 2558px;
+        height: 1422px;
 }
 
 .top3-table{
         position: absolute;
-        left:1872px;
+        left:390px;
         top: 463px;
         font-size: 52px;
 }

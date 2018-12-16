@@ -1643,10 +1643,9 @@ model</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="380" parent="285" name="sub">
+    <column id="380" parent="285" name="sub_id">
       <Position>6</Position>
-      <DataType>varchar(32)|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="381" parent="285" name="age">
@@ -1655,31 +1654,41 @@ model</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="382" parent="285" name="PRIMARY">
+    <index id="382" parent="285" name="megagames_player_sub_id_20f8186f">
+      <ColNames>sub_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="383" parent="285" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="383" parent="286" name="id">
+    <foreign-key id="384" parent="285" name="megagames_player_sub_id_20f8186f_fk_megagames_ref_id">
+      <ColNames>sub_id</ColNames>
+      <RefSchemaName>db_mgp</RefSchemaName>
+      <RefTableName>megagames_ref</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="385" parent="286" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="384" parent="286" name="name">
+    <column id="386" parent="286" name="name">
       <Position>2</Position>
       <DataType>varchar(64)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="385" parent="286" name="type">
+    <column id="387" parent="286" name="type">
       <Position>3</Position>
       <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="386" parent="286" name="PRIMARY">
+    <key id="388" parent="286" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

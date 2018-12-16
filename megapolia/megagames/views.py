@@ -103,7 +103,8 @@ def playerEnter(request, pid):
         age = request.POST.get("age")
         pid = request.POST.get("pid")
 
-        Player.objects.create(pid=pid, login=payername, firstName=first_name, lastName=last_name, sub=Ref.objects.get(id=sub), age=age)
+        Player.objects.create(pid=pid, login=payername, firstName=first_name, lastName=last_name,
+                              sub=Ref.objects.get(id=sub), age=age)
 
         return player(request, pid)
     else:
@@ -150,18 +151,17 @@ def stat():
     players = Player.objects.all()
 
     for pla in players:
-        add = Event.objects.filter(player__pid=pla.pid).aggregate(Sum('add')).get('add__sum', 0.00)
+        evs = Event.objects.filter(player=pla)
+        add = evs.aggregate(Sum('add')).get('add__sum', 0.00)
         if add is None:
             add = 0
-
-        evs = Event.objects.filter(player=pla)
 
         act_count = evs.values('activity').distinct().count()
         max_date = None
         if evs.count() != 0:
             max_date = evs.order_by('createAt')[0].createAt
         else:
-            max_date = max_date = datetime.datetime.min
+            max_date = datetime.datetime.min
 
         reselement = StatEl(add, pla, act_count, max_date)
         res.append(reselement)
@@ -174,6 +174,7 @@ def stat():
 
     s = sorted(res, key=take_la)
     res = sorted(s, key=take_add, reverse=True)
+
     return res
 
 
@@ -182,4 +183,10 @@ def stat3(request):
 
 
 def stat10(request):
-    return render(request, "stat3.html", {'stats': stat()[:10]})
+    return render(request, "stat10.html", {'stats': stat()[:10]})
+
+
+def fill_db(request):
+    for i in range(1000, 4000):
+        if Player.objects.filter(pid=i).count() == 0:
+            Player.objects.create(pid=i, login=i, firstName=i, lastName=i, sub=Ref.objects.get(id=1), age=i)
