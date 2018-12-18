@@ -17,7 +17,6 @@ class RefChoiceField(forms.ModelChoiceField):
 
 
 class PlayerForm(forms.Form):
-    login = forms.CharField(label='Логин')
     firstName = forms.CharField(label='Имя')
     lastName = forms.CharField(label='Фамилия')
     sub = RefChoiceField(queryset=Ref.objects.filter(type='sub'), label='Подразделение')

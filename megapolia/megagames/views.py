@@ -113,7 +113,7 @@ def playerEnter(request, pid):
         age = request.POST.get("age")
         pid = request.POST.get("pid")
 
-        Player.objects.create(pid=pid, login=payername, firstName=first_name, lastName=last_name,
+        Player.objects.create(pid=pid, login='', firstName=first_name, lastName=last_name,
                               sub=Ref.objects.get(id=sub), age=age, score=0, lastEvent=datetime.datetime.now())
 
         return player(request, pid)
