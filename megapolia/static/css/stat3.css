@@ -9,16 +9,23 @@ body {
         position: absolute;
         left:175px;
         top: 208px;
-        font-size: 52px;
+        font-size: 37px;
+        color: #731982;
+        font-family: Arial;
+        text-overflow: ellipsis;
 }
 .top3-table td{
         height: 126px;
+        max-height: 126px;
         text-align: center;
         overflow-x: hidden;
         overflow-y: hidden;
 }
 .top3-name{
-        width: 400px;
+        width: 382px;
+        max-width: 382px;
+        padding-left: 10px!important;
+        padding-right: 10px!important;
 }
 .top3-act-count{
         width: 267px;

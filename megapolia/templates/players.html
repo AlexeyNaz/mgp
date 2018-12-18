@@ -11,7 +11,7 @@
     <thead>
     <tr class="">
         <th>Место</th>
-        <th>Логин</th>
+        <th>pid</th>
         <th>Имя</th>
         <th>Фамилия</th>
         <th>Подразделение</th>
@@ -24,7 +24,7 @@
     {% for r in  players %}
     <tr class="">
         <td class="">{{forloop.counter}}</td>
-        <td class="">{{r.login}}</td>
+        <td class="">{{r.pid}}</td>
         <td class="">{{r.firstName}}</td>
         <td class="">{{r.lastName}}</td>
         <td class="">{{r.sub.name}}</td>

@@ -9,17 +9,24 @@ body {
         position: absolute;
         left:175px;
         top: 208px;
-        font-size: 23px;
+        font-size: 22px;
+        color: #731982;
+        font-family: Arial;
 }
 .top10-table td{
         padding: 0;
         height: 38px;
+        max-height: 38px;
         text-align: center;
         overflow-x: hidden;
         overflow-y: hidden;
+        white-space:nowrap;
 }
 .top10-name{
-        width: 400px;
+        width: 382px;
+        max-width: 382px;
+        padding-left: 10px!important;
+        padding-right: 10px!important;
 }
 .top10-act-count{
         width: 267px;
